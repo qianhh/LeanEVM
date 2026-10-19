@@ -63,7 +63,7 @@ def EvmCode.decode (st:EvmCode)(pc:Nat) : Bytecode :=
   -- Read opcode
   let opcode := st.read pc;
   -- Decode opcode
-  match opcode.val with
+  match opcode.toNat with
   -- 0s: Stop and Arithmetic Operations
   | 0x00 => Bytecode.Stop
   | 0x01 => Bytecode.Add
@@ -77,39 +77,39 @@ def EvmCode.decode (st:EvmCode)(pc:Nat) : Bytecode :=
   -- 50s: Stack, Memory Storage and Flow Operations
   | 0x50 => Bytecode.Pop
   -- 60s & 70s: Push Operations
-  | 0x60 => Bytecode.Push (st.slice (pc+1) 1 (by simp_arith))
-  | 0x61 => Bytecode.Push (st.slice (pc+1) 2 (by simp_arith))
-  | 0x62 => Bytecode.Push (st.slice (pc+1) 3 (by simp_arith))
-  | 0x63 => Bytecode.Push (st.slice (pc+1) 4 (by simp_arith))
-  | 0x64 => Bytecode.Push (st.slice (pc+1) 5 (by simp_arith))
-  | 0x65 => Bytecode.Push (st.slice (pc+1) 6 (by simp_arith))
-  | 0x66 => Bytecode.Push (st.slice (pc+1) 7 (by simp_arith))
-  | 0x67 => Bytecode.Push (st.slice (pc+1) 8 (by simp_arith))
-  | 0x68 => Bytecode.Push (st.slice (pc+1) 9 (by simp_arith))
-  | 0x69 => Bytecode.Push (st.slice (pc+1) 10 (by simp_arith))
-  | 0x6a => Bytecode.Push (st.slice (pc+1) 11 (by simp_arith))
-  | 0x6b => Bytecode.Push (st.slice (pc+1) 12 (by simp_arith))
-  | 0x6c => Bytecode.Push (st.slice (pc+1) 13 (by simp_arith))
-  | 0x6d => Bytecode.Push (st.slice (pc+1) 14 (by simp_arith))
-  | 0x6e => Bytecode.Push (st.slice (pc+1) 15 (by simp_arith))
-  | 0x6f => Bytecode.Push (st.slice (pc+1) 16 (by simp_arith))
+  | 0x60 => Bytecode.Push (st.slice (pc+1) 1 (by simp +arith))
+  | 0x61 => Bytecode.Push (st.slice (pc+1) 2 (by simp +arith))
+  | 0x62 => Bytecode.Push (st.slice (pc+1) 3 (by simp +arith))
+  | 0x63 => Bytecode.Push (st.slice (pc+1) 4 (by simp +arith))
+  | 0x64 => Bytecode.Push (st.slice (pc+1) 5 (by simp +arith))
+  | 0x65 => Bytecode.Push (st.slice (pc+1) 6 (by simp +arith))
+  | 0x66 => Bytecode.Push (st.slice (pc+1) 7 (by simp +arith))
+  | 0x67 => Bytecode.Push (st.slice (pc+1) 8 (by simp +arith))
+  | 0x68 => Bytecode.Push (st.slice (pc+1) 9 (by simp +arith))
+  | 0x69 => Bytecode.Push (st.slice (pc+1) 10 (by simp +arith))
+  | 0x6a => Bytecode.Push (st.slice (pc+1) 11 (by simp +arith))
+  | 0x6b => Bytecode.Push (st.slice (pc+1) 12 (by simp +arith))
+  | 0x6c => Bytecode.Push (st.slice (pc+1) 13 (by simp +arith))
+  | 0x6d => Bytecode.Push (st.slice (pc+1) 14 (by simp +arith))
+  | 0x6e => Bytecode.Push (st.slice (pc+1) 15 (by simp +arith))
+  | 0x6f => Bytecode.Push (st.slice (pc+1) 16 (by simp +arith))
   -- 80s: Duplication Operations
-  | 0x80 => Bytecode.Dup {val:=0, isLt:=(by simp_arith)}
-  | 0x81 => Bytecode.Dup {val:=1, isLt:=(by simp_arith)}
-  | 0x82 => Bytecode.Dup {val:=2, isLt:=(by simp_arith)}
-  | 0x83 => Bytecode.Dup {val:=3, isLt:=(by simp_arith)}
-  | 0x84 => Bytecode.Dup {val:=4, isLt:=(by simp_arith)}
-  | 0x85 => Bytecode.Dup {val:=5, isLt:=(by simp_arith)}
-  | 0x86 => Bytecode.Dup {val:=6, isLt:=(by simp_arith)}
-  | 0x87 => Bytecode.Dup {val:=7, isLt:=(by simp_arith)}
-  | 0x88 => Bytecode.Dup {val:=8, isLt:=(by simp_arith)}
-  | 0x89 => Bytecode.Dup {val:=9, isLt:=(by simp_arith)}
-  | 0x8a => Bytecode.Dup {val:=10, isLt:=(by simp_arith)}
-  | 0x8b => Bytecode.Dup {val:=11, isLt:=(by simp_arith)}
-  | 0x8c => Bytecode.Dup {val:=12, isLt:=(by simp_arith)}
-  | 0x8d => Bytecode.Dup {val:=13, isLt:=(by simp_arith)}
-  | 0x8e => Bytecode.Dup {val:=14, isLt:=(by simp_arith)}
-  | 0x8f => Bytecode.Dup {val:=15, isLt:=(by simp_arith)}
+  | 0x80 => Bytecode.Dup {val:=0, isLt:=(by simp +arith)}
+  | 0x81 => Bytecode.Dup {val:=1, isLt:=(by simp +arith)}
+  | 0x82 => Bytecode.Dup {val:=2, isLt:=(by simp +arith)}
+  | 0x83 => Bytecode.Dup {val:=3, isLt:=(by simp +arith)}
+  | 0x84 => Bytecode.Dup {val:=4, isLt:=(by simp +arith)}
+  | 0x85 => Bytecode.Dup {val:=5, isLt:=(by simp +arith)}
+  | 0x86 => Bytecode.Dup {val:=6, isLt:=(by simp +arith)}
+  | 0x87 => Bytecode.Dup {val:=7, isLt:=(by simp +arith)}
+  | 0x88 => Bytecode.Dup {val:=8, isLt:=(by simp +arith)}
+  | 0x89 => Bytecode.Dup {val:=9, isLt:=(by simp +arith)}
+  | 0x8a => Bytecode.Dup {val:=10, isLt:=(by simp +arith)}
+  | 0x8b => Bytecode.Dup {val:=11, isLt:=(by simp +arith)}
+  | 0x8c => Bytecode.Dup {val:=12, isLt:=(by simp +arith)}
+  | 0x8d => Bytecode.Dup {val:=13, isLt:=(by simp +arith)}
+  | 0x8e => Bytecode.Dup {val:=14, isLt:=(by simp +arith)}
+  | 0x8f => Bytecode.Dup {val:=15, isLt:=(by simp +arith)}
   -- 90s: Exchange Operations
   -- a0s: Logging Operations
   -- f0s: System operations

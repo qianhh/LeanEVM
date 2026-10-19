@@ -23,31 +23,29 @@ def from_bytes_le(bytes:List UInt8) : Nat :=
 def from_bytes_le_bound(bytes:List UInt8) : (from_bytes_le bytes) < 256^bytes.length :=
 by
   match bytes with
-  | [] => simp_arith
+  | [] => simp [from_bytes_le]
   | b::bs =>
       apply pow256_shl
       apply (from_bytes_le_bound bs)
 
 -- Prove correct translation for sequence of length 1.
-example (n:UInt8): (from_bytes_le [n]) = n.val :=
+example (n:UInt8): (from_bytes_le [n]) = n.toNat :=
 by
   repeat unfold from_bytes_le
   simp
-  rfl
 
 -- Prove correct translation for simple sequence of length 2.
-example (n:UInt8): (from_bytes_le [n, 0]) = n.val :=
+example (n:UInt8): (from_bytes_le [n, 0]) = n.toNat :=
 by
   repeat unfold from_bytes_le
   simp
-  rfl
 
 -- Prove correct translation for arbitrary sequence of length 2.
-example (m:UInt8)(n:UInt8): (from_bytes_le [m, n]) = m.val + (256*n.val) :=
+example (m:UInt8)(n:UInt8): (from_bytes_le [m, n]) = m.toNat + (256*n.toNat) :=
 by
   repeat unfold from_bytes_le
   unfold UInt8.toNat
-  simp_arith
+  simp +arith
 
 -- ==================================================================================
 -- From Bytes (big endian)
@@ -69,28 +67,28 @@ def from_bytes_be(bytes:List UInt8) : Nat :=
 def from_bytes_be_bound(bytes:List UInt8) : (from_bytes_be bytes) < 256^bytes.length :=
 by
   match bytes with
-  | [] => simp_arith
+  | [] => simp [from_bytes_be]
   | b::bs =>
       apply pow256_shr
       apply (from_bytes_be_bound bs)
 
 -- Prove correct translation for sequence of length 1.
-example (n:UInt8): (from_bytes_be [n]) = n.val :=
+example (n:UInt8): (from_bytes_be [n]) = n.toNat :=
 by
   repeat unfold from_bytes_be
   unfold UInt8.toNat
-  simp_arith
+  simp +arith
 
 -- Prove correct translation for simple sequence of length 2.
-example (n:UInt8): (from_bytes_be [0, n]) = n.val :=
+example (n:UInt8): (from_bytes_be [0, n]) = n.toNat :=
 by
   repeat unfold from_bytes_be
   unfold UInt8.toNat
-  simp_arith
+  simp +arith
 
 -- Prove correct translation for arbitrary sequence of length 2.
-example (m:UInt8)(n:UInt8): (from_bytes_be [m, n]) = (256*m.val) + n.val :=
+example (m:UInt8)(n:UInt8): (from_bytes_be [m, n]) = (256*m.toNat) + n.toNat :=
 by
   repeat unfold from_bytes_be
   unfold UInt8.toNat
-  simp_arith
+  simp +arith

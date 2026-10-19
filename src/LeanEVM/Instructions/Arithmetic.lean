@@ -26,7 +26,7 @@ def ADD (evm: Evm) : Outcome :=
 -- Executing ADD on an empty Evm produces a stack overflow.
 example : (ADD EmptyEvm) = (Error StackUnderflow) :=
 by
-  simp_arith
+  simp [ADD, EmptyEvm]
 
 -- Executing ADD on Evm with two operands succeeds.
 example (rest:List UInt256): exists evm, (ADD {stack:=l::r::rest}) = (Ok evm) :=
@@ -47,7 +47,7 @@ by
 -- Test max+1 = 0
 example (rest:List UInt256): exists evm, (ADD {stack:=1::U256_MAX::rest}) = (Ok evm) :=
 by
-  simp_arith
+  simp +arith
 
 -- ==================================================================
 -- Sub

@@ -51,29 +51,35 @@ by
 -- Executing PUSH, PUSH, ADD on an Evm always succeeds.
 example (evm:Evm): ∃evm', (eval [Push n, Push m, Add] evm) = Ok evm' :=
 by
-  simp_arith
+  simp [eval, eval.reduce, dispatch, PUSH, ADD, Evm.push, Evm.pop, Evm.peek,
+    List.length_cons] <;> split <;> simp_all <;> omega
 
 -- Executing DUP1 has the right effect
 example (evm:Evm): ∃evm', (eval [Push ns, Dup_1] evm) = (Ok evm') :=
 by
-  simp_arith
+  simp [eval, eval.reduce, dispatch, PUSH, DUP, Evm.push, Evm.peek,
+    List.length_cons] <;> split <;> simp_all <;> omega
 
 -- Executing DUP2 has the right effect
 example (evm:Evm): ∃evm', (eval [Push ns, Push ms, Dup_2] evm) = (Ok evm') :=
 by
-  simp_arith
+  simp [eval, eval.reduce, dispatch, PUSH, DUP, Evm.push, Evm.peek,
+    List.length_cons] <;> split <;> simp_all <;> omega
 
 -- Executing DUP3 has the right effect
 example (evm:Evm): ∃evm', (eval [Push ns, Push ms, Push ls, Dup_3] evm) = (Ok evm') :=
 by
-  simp_arith
+  simp [eval, eval.reduce, dispatch, PUSH, DUP, Evm.push, Evm.peek,
+    List.length_cons] <;> split <;> simp_all <;> omega
 
 -- Executing SWAP1 has the right effect
 example (evm:Evm): ∃evm', (eval [Push ns, Push ms, Swap_1] evm) = (Ok evm') :=
 by
-  simp_arith
+  simp [eval, eval.reduce, dispatch, PUSH, SWAP, Evm.push, Evm.peek, Evm.set,
+    List.length_cons] <;> split <;> simp_all <;> omega
 
 -- Executing SWAP2 has the right effect
 example (evm:Evm): ∃evm', (eval [Push ns, Push ms, Push ls, Swap_2] evm) = (Ok evm') :=
 by
-  simp_arith
+  simp [eval, eval.reduce, dispatch, PUSH, SWAP, Evm.push, Evm.peek, Evm.set,
+    List.length_cons] <;> split <;> simp_all <;> omega
